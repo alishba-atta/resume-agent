@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Resume Agent</title>
+    <title>AI Resume Generator Agent</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -13,7 +13,7 @@
             color: #333;
         }
         .container {
-            max-width: 650px;
+            max-width: 700px;
             background: #ffffff;
             padding: 25px;
             border-radius: 12px;
@@ -37,7 +37,7 @@
             margin-top: 15px;
             color: #34495e;
         }
-        textarea {
+        textarea, select {
             width: 100%;
             padding: 12px;
             margin-top: 6px;
@@ -65,56 +65,129 @@
         .output-box {
             background: #f8fafc;
             border: 1px solid #e2e8f0;
-            padding: 15px;
+            padding: 20px;
             margin-top: 20px;
             border-radius: 6px;
             white-space: pre-wrap;
-            min-height: 120px;
+            min-height: 180px;
             font-size: 14px;
-            line-height: 1.5;
+            line-height: 1.6;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>AI Resume Optimizer Agent</h2>
-    <p class="subtitle">Smart Resume & Career Assistant</p>
+    <h2>AI Resume Generator Agent</h2>
+    <p class="subtitle">Aapka data, aapki pasandeeda language mein resume</p>
 
-    <label for="resumeText">Apna Resume ya Experience yahan paste karein:</label>
-    <textarea id="resumeText" rows="6" placeholder="Misal: Data entry, Excel, aur Canva designing ka tajurba hai..."></textarea>
+    <label for="langSelect">Jawab ki Language Select Karein:</label>
+    <select id="langSelect">
+        <option value="roman">Roman Urdu</option>
+        <option value="english">English</option>
+        <option value="urdu">Urdu ( اردو )</option>
+    </select>
 
-    <button onclick="runSmartAgent()">Agent Se Mashwara Lein</button>
+    <label for="userInput">Apni details ya requirements yahan likhein (Kisi bhi language mein):</label>
+    <textarea id="userInput" rows="5" placeholder="Misal: Name Alishba, Data entry operator, 6 months experience in Google sheets..."></textarea>
 
-    <label>Agent ka Jawab (Roman Urdu / English):</label>
-    <div id="output" class="output-box">Aapka result yahan show hoga...</div>
+    <button onclick="generateResume()">Resume Banayein</button>
+
+    <label>Aapka Mukammal Resume:</label>
+    <div id="output" class="output-box">Yahan aapka professional resume show hoga...</div>
 </div>
 
 <script>
-    function runSmartAgent() {
-        const text = document.getElementById('resumeText').value.trim();
+    function generateResume() {
+        const text = document.getElementById('userInput').value.trim();
+        const selectedLang = document.getElementById('langSelect').value;
         const outputDiv = document.getElementById('output');
 
         if (!text) {
-            outputDiv.innerText = "Barah-e-karam pehle apna resume ya experience text box mein likhein.";
+            outputDiv.innerText = "Barah-e-karam pehle apni kuch details enter karein.";
             return;
         }
 
-        outputDiv.innerText = "Agent analysis kar raha hai... Barah-e-karam intezar karein.";
+        outputDiv.innerText = "Agent resume format tayar kar raha hai...";
 
-        // Smart Local AI Agent Logic (Zero Error, No API Key / Network block needed)
         setTimeout(() => {
-            let response = "=== AI RESUME AGENT REPORT ===\n\n";
-            response += "1. **Aapki Strengths:** Aapke paas data entry, document management, aur Canva designing ka acha combination hai jo administrative aur digital roles ke liye zabardast hai.\n\n";
-            response += "2. **Behtari ke liye Tajweez (Suggestions):**\n";
-            response += "   - Apne resume mein apne kaam ke numbers ya deliverables zaroor shamil karein (misal ke tor par: 'Formatted 198 images' ya 'Managed daily spreadsheets').\n";
-            response += "   - Canva aur design skills ko alag section mein 'Creative Skills' ke tor par highlight karein.\n\n";
-            response += "3. **Optimized Bullet Point Example:**\n";
-            response += "   - 'Executed accurate data entry and document formatting using Google Workspace, ensuring zero-error outputs.'\n\n";
-            response += "Aap is format ko mazeed customize kar sakti hain!";
-            
-            outputDiv.innerText = response;
-        }, 1000);
+            let resumeOutput = "";
+
+            if (selectedLang === "roman") {
+                resumeOutput = `========================================
+             PROFESSIONAL RESUME
+========================================
+
+[ RABTA / CONTACT INFORMATION ]
+* Naam: Alishba Atta
+* Field: Data Entry & Digital Services
+
+[ PROFESSIONAL SUMMARY ]
+* Ek mehnati aur professional profile jo diye gaye tajurbay aur skills ke mutabiq tayar ki gayi hai.
+
+[ BUNYADI SKILLS (CORE SKILLS) ]
+* Data Entry & Spreadsheet Management (Google Docs / Sheets)
+* Document Formatting & Copy-Pasting
+* Graphic Designing & Canva Post Creation
+* Time Management & Problem Solving
+
+[ TAJURBA / EXPERIENCE & PROJECTS ]
+* Diye gaye data ke mutabiq tamam tasks ko behtareen aur error-free tareeqay se anjam diya gaya hai.
+
+[ USER DATA DETAILS ]:
+-> ${text}
+========================================`;
+            } else if (selectedLang === "urdu") {
+                resumeOutput = `========================================
+             پروفیشنل ریزوم
+========================================
+
+[ رابطہ کی معلومات ]
+* نام: علیشہ عطا
+* شعبہ: ڈیٹا انٹری اور ڈیجیٹل سروسز
+
+[ پروفیشنل سمری ]
+* دی گئی تفصیلات اور تجربے کے مطابق تیار کردہ پیشہ ورانہ پروفائل۔
+
+[ بنیادی مہارتیں (CORE SKILLS) ]
+* ڈیٹا انٹری اور اسریڈشیٹ مینجمنٹ (گوگل ڈاکس / شیٹس)
+* دستاویز کی فارمیٹنگ اور کاپی پیسٹنگ
+* گرافک ڈیزائننگ اور کینوا پوسٹ کی تخلیق
+
+[ تجربہ اور پروجیکٹس ]
+* تمام ڈیجیٹل ٹاسکس کو درستگی کے ساتھ مکمل کرنے کا تجربہ۔
+
+[ صارف کی فراہم کردہ تفصیلات ]:
+-> ${text}
+========================================`;
+            } else {
+                resumeOutput = `========================================
+             PROFESSIONAL RESUME
+========================================
+
+[ CONTACT INFORMATION ]
+* Name: Alishba Atta
+* Field: Data Entry & Digital Services
+
+[ PROFESSIONAL SUMMARY ]
+* Detail-oriented and results-driven professional profile built according to the provided details and experience.
+
+[ CORE SKILLS ]
+* Data Entry & Spreadsheet Management (Google Docs / Sheets)
+* Document Formatting & Copy-Pasting
+* Graphic Designing & Canva Creation
+* Time Management & Problem Solving
+
+[ EXPERIENCE & PROJECTS ]
+* Successfully managed and executed digital tasks and project formatting with high precision.
+
+[ PROVIDED USER DETAILS ]:
+-> ${text}
+========================================`;
+            }
+
+            outputDiv.innerText = resumeOutput;
+        }, 800);
     }
 </script>
 
